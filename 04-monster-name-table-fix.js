@@ -13,15 +13,7 @@
 
     // --- BẢNG TÊN NỘI BỘ: Khớp 1:1 với vectorMonsterDatabase của Giai đoạn 27 ---
     // Chỉ mục 0-14: Quái thường | Chỉ mục 15-19: Boss siêu cấp
-    const _bossNames = [
-        "👹 CHÚA TỂ ĐẠI NGỤC (BOSS)",  // 15
-        "⚡ THẦN CƠ ĐẾ QUỐC (BOSS)",   // 16
-        "🐉 CỔ LONG BĂNG GIÁ (BOSS)",  // 17
-        "🔮 PHÙ THỦY HƯ KHÔNG (BOSS)", // 18
-        "💥 KHỔNG LỒ DIỆT THẾ (BOSS)"  // 19
-    ];
-    // Tên quái thường lấy từ kho ảnh (00-image-manifest.js) để tên luôn khớp hình
-    const _monsterNames = window.GAME_IMAGES.monsters.map(m => m.name).concat(_bossNames);
+    // Không đặt tên quái nữa: phòng thường không hiện tên, phòng Boss (10, 20, 30...) chỉ ghi "BOSS".
 
     window.generateRoom = function() {
         if (playerState.hp <= 0 || gameState.timer <= 0) return;
@@ -50,8 +42,7 @@
             // renderVectorCharacterHTML nhận bất kỳ số nguyên + isBoss=true, nó tự tính 15 + (index%5)
             // Truyền currentMonsterIndex thô, để hàm tự ánh xạ → đảm bảo nhất quán tên + hình
             renderIndex = currentMonsterIndex;
-            let bossSlot = window.GAME_IMAGES.monsters.length + (currentMonsterIndex % 5);
-            monsterName = _monsterNames[bossSlot];
+                        monsterName = 'BOSS';
 
             // Trừ số phòng boss liên tiếp (Cần Câu Cá)
             if (playerState.bossRoomsRemaining > 0) playerState.bossRoomsRemaining--;
@@ -59,11 +50,12 @@
         } else {
             // QUÁI THƯỜNG: KHÓA CỨNG trong phân đoạn 0-14, tuyệt đối không chạm 15-19
             renderIndex = Math.floor(Math.random() * window.GAME_IMAGES.monsters.length); // quái thường: bốc ngẫu nhiên mỗi phòng
-            monsterName = _monsterNames[renderIndex];
+            monsterName = '';
         }
 
         // 3. THIẾT LẬP TÊN VÀ MÀU TIÊU ĐỀ
         enemyNameUI.innerText = monsterName;
+        enemyNameUI.style.display = isCurrentRoomBoss ? '' : 'none'; // phòng thường: ẩn luôn ô tên
         enemyNameUI.style.color = isCurrentRoomBoss ? "var(--btn-danger)" : "#fbbf24";
 
         // 4. KÍCH HOẠT KẾT XUẤT MÔ HÌNH VECTOR ART GIAI ĐOẠN 27 (GIỮ NGUYÊN HÌNH ẢNH)
