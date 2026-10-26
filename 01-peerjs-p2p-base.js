@@ -7,6 +7,7 @@ scriptPeer.src = "peerjs.min.js";
 scriptPeer.onerror = function () {
     const backup = document.createElement('script');
     backup.src = "https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js";
+    backup.onload = scriptPeer.onload;   // quan trọng: để nút Tạo Phòng / Vào Phòng vẫn hiện ra
     document.head.appendChild(backup);
 };
 document.head.appendChild(scriptPeer);
