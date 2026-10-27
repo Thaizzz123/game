@@ -175,3 +175,14 @@ html { background-color: var(--panel-color); }
     html body #mlb-panel.mlb-open { right: 22px; transform: translateX(0); }
     html body #mlb-tab { position: fixed; }
 }
+
+/* ═══ THANH TRÊN CÙNG TRONG GAME (máu / phòng / giờ / điểm / streak) ═══ */
+#game-top { flex-wrap: wrap; row-gap: 6px; column-gap: 8px; padding-bottom: 22px; margin-bottom: 26px; }
+#game-top > div { white-space: nowrap; }                       /* mỗi chỉ số nằm trọn 1 dòng, không bị bẻ chữ */
+#game-top #ui-combo-streak-display {                           /* Streak xuống hàng riêng, căn giữa, không chạm lề */
+    order: 10; flex: 0 0 100%; box-sizing: border-box;
+    text-align: center; white-space: normal;
+    margin: 6px 0 0 !important; padding: 0 12px;
+}
+#game-top #ui-combo-streak-display:empty { display: none; }
+@media (max-width: 420px) { #game-top { font-size: 16px; } }
